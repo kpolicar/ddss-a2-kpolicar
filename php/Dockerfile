@@ -2,7 +2,7 @@
 # Authors: Nuno Antunes <nmsa@dei.uc.pt>, João Antunes <jcfa@dei.uc.pt>
 #
 
-from php:7.2-apache
+from php:8.1.11-apache
 
 
 RUN apt-get update
