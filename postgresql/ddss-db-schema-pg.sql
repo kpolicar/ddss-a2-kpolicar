@@ -46,6 +46,15 @@ CREATE TABLE books (
 
 
 
+-- Default data for users
+insert into users (username, password)
+          values ('kpolicar', '$2y$10$UQgjGGIRhGuXuqFR431uQudcaIZZRTzhnTCXDJrg2eQJ3ghL5AyGG'); --1234
+
+insert into users (username, password)
+          values ('jpolicar', '$2y$10$ME3vwZ44KB2VsPOZDEXh0.wtTCuj9hOawfsqtpcGg8Qi99CaVxtkS'); --1234
+
+
+
 -- Default data for messages
 insert into messages (author, message)
           values ('Vulnerable', 'Hi! I wrote this message using Vulnerable Form.');
