@@ -1,4 +1,6 @@
 <?php
+	session_start();
+	require_once __DIR__ . '/vendor/autoload.php';
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 		$password = $_POST['v_password'];
@@ -10,14 +12,12 @@
 		$remember = $_GET['v_remember'];
 	}
 
+	$db = pg_connect("host=db dbname=ddss-database-assignment-2 user=ddss-database-assignment-2 password=ddss-database-assignment-2");
 
-	print("v_password  -> " . $password . "<br/>");
-    print("v_username  -> " . $username . "<br/>");
-    print("v_remember  -> " . $remember . "<br/>");
+	$users = pg_query($db, "SELECT * FROM users WHERE username='$username' AND password='$password'");
+	// printTable($users);
+	$arr = pg_fetch_all($users);
 
-
-
-
-
+	header("Location: /part1.php?username=$username");
 ?>
 

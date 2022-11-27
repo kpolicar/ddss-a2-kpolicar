@@ -45,8 +45,8 @@
             <br>
 
             <form action="/part1_vulnerable.php">
-                <?php $records = $_SESSION['records'] ?? null; ?>
-                <table  border="1" cellpadding="1" style="width: 300px; background-color:#f1f1f1; <?php if($records === []): ?>border-color: red;<?php endif; ?>">
+                <?php $errors = $_SESSION['errors'] ?? null; ?>
+                <table  border="1" cellpadding="1" style="width: 300px; background-color:#f1f1f1; <?php if(!empty($errors)): ?>border-color: red;<?php endif; ?>">
                     <thead>
                         <tr>
                             <th colspan="2"><b>Part 1.0 - Vulnerable Form</b></th>
@@ -57,10 +57,20 @@
                             <td><label>Username</label></td>
                             <td><input type="text" placeholder="Enter Username" name="v_username" value="<?= $_GET['username'] ?? '' ?>"></td>
                         </tr>
+                        <?php if($errors['username'] ?? false): ?>
+                            <tr>
+                                <td align="right" colspan="2" style="color: red; font-size: 12px;"><?= $errors['username'] ?></td>
+                            </tr>
+                        <?php endif; ?>
                         <tr>
                             <td><label>Password</label> </td>
                             <td><input type="password" placeholder="Enter Password" name="v_password" value="<?= $_GET['password'] ?? '' ?>"> </td>
                         </tr>
+                        <?php if($errors['password'] ?? false): ?>
+                            <tr>
+                                <td align="right" colspan="2" style="color: red; font-size: 12px;"><?= $errors['password'] ?></td>
+                            </tr>
+                        <?php endif; ?>
                         <tr>
                             <td><label>Remember me</label></td>
                             <td><input  type="checkbox" checked="checked" name="v_remember"></td>
@@ -68,11 +78,6 @@
                         <tr>
                             <td align="right" colspan="2"><button type="submit">Login</button></td>
                         </tr>
-                        <?php if($records === []): ?>
-                        <tr>
-                            <td align="right" colspan="2" style="color: red; font-size: 12px;">No records were found matching the criteria!</td>
-                        </tr>
-                        <?php endif; ?>
                     </tbody>
                 </table>
             </form> 
@@ -90,7 +95,7 @@
                     <tbody>
                         <tr>
                             <td><label>Username</label></td>
-                            <td><input type="text" placeholder="Enter Username" name="c_username" value="<?= $_GET['username'] ?? '' ?>"></td>
+                            <td><input type="text" placeholder="Enter Username" name="c_username" value="<?= e($_GET['username']) ?? '' ?>"></td>
                         </tr>
                         <tr>
                             <td><label>Password</label> </td>
@@ -112,5 +117,5 @@
 </html>
 
 <?php
-unset($_SESSION['records']);
+unset($_SESSION['errors']);
 ?>

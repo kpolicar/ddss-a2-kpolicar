@@ -2,7 +2,6 @@
 	session_start();
 	require_once __DIR__ . '/vendor/autoload.php';
 
-
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 		$password = $_POST['v_password'];
 		$username = $_POST['v_username'];
@@ -15,11 +14,25 @@
 
 	$db = pg_connect("host=db dbname=ddss-database-assignment-2 user=ddss-database-assignment-2 password=ddss-database-assignment-2");
 
-	$users = pg_query($db, "SELECT * FROM users WHERE username='$username' AND password='$password'");
+	$users = pg_query($db, "SELECT * FROM users WHERE username='$username'");
 	// printTable($users);
 	$arr = pg_fetch_all($users);
 
-	$_SESSION['records'] = $arr;
-	header("Location: /part1.php?username=$username&password=$password");
+	$success = false;
+	if (empty($arr)) {
+		$_SESSION['errors']['username'] = "A user with username \"$username\" does not exist!";
+	} else {
+		$success = collect($arr)->contains(function ($user) use ($password) {
+			return (new \Illuminate\Hashing\BcryptHasher)->check($password, $user['password']);
+		});
+	}
+
+	$_SESSION['v_records'] = $arr;
+	if ($success) {
+		header("Location: /?message=Success");
+	} else {
+		$_SESSION['errors']['password'] = 'Invalid password!';
+		header("Location: /part1.php?username=$username&password=$password");
+	}
 ?>
 

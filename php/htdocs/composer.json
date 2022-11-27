@@ -3,7 +3,8 @@
     "type": "project",
     "require": {
         "illuminate/support": "^8.83",
-        "symfony/var-dumper": "^5.4"
+        "symfony/var-dumper": "^5.4",
+        "illuminate/hashing": "^8.83"
     },
     "authors": [
         {
