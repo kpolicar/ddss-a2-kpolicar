@@ -15,7 +15,6 @@
 	$db = pg_connect("host=db dbname=ddss-database-assignment-2 user=ddss-database-assignment-2 password=ddss-database-assignment-2");
 
 	$users = pg_query($db, "SELECT * FROM users WHERE username='$username'");
-	// printTable($users);
 	$arr = pg_fetch_all($users);
 
 	$success = false;
@@ -31,7 +30,7 @@
 	if ($success) {
 		header("Location: /?message=Success");
 	} else {
-		$_SESSION['errors']['password'] = 'Invalid password!';
+		$_SESSION['v_errors']['password'] = 'Invalid password!';
 		header("Location: /part1.php?username=$username&password=$password");
 	}
 ?>

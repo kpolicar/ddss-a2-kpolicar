@@ -45,7 +45,7 @@
             <br>
 
             <form action="/part1_vulnerable.php">
-                <?php $errors = $_SESSION['errors'] ?? null; ?>
+                <?php $errors = $_SESSION['v_errors'] ?? null; ?>
                 <table  border="1" cellpadding="1" style="width: 300px; background-color:#f1f1f1; <?php if(!empty($errors)): ?>border-color: red;<?php endif; ?>">
                     <thead>
                         <tr>
@@ -86,7 +86,8 @@
             <br>
 
             <form action="/part1_correct.php">
-                <table style="width: 300px ; background-color:#f19191" border="1" cellpadding="1">
+                <?php $errors = $_SESSION['c_errors'] ?? null; ?>
+                <table style="width: 300px ; background-color:#f19191; <?php if(!empty($errors)): ?>border-color: red;<?php endif; ?>" border="1" cellpadding="1">
                     <thead>
                         <tr>
                             <th colspan="2"><b>Part 1.1 - Correct Form</b></th>
@@ -108,14 +109,19 @@
                         <tr>
                             <td align="right" colspan="2"><button type="submit">Login</button></td>
                         </tr>
-
+                        <?php if($errors['credentials'] ?? false): ?>
+                            <tr>
+                                <td align="right" colspan="2" style="color: red; font-size: 12px;"><?= $errors['credentials'] ?></td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
-            </form> 
+            </form>
         </div>
     </body>
 </html>
 
 <?php
-unset($_SESSION['errors']);
+unset($_SESSION['c_errors']);
+unset($_SESSION['v_errors']);
 ?>
