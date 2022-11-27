@@ -1,4 +1,4 @@
-<?php
+<?php //todo: instead of session, store it in cookies and put the result of $arr in cookies
 	session_start();
 	require_once __DIR__ . '/vendor/autoload.php';
 
