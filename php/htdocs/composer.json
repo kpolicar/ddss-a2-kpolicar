@@ -1,0 +1,14 @@
+{
+    "name": "klemen/ddss_pa2",
+    "type": "project",
+    "require": {
+        "illuminate/support": "^8.83",
+        "symfony/var-dumper": "^5.4"
+    },
+    "authors": [
+        {
+            "name": "Klemen Poličar",
+            "email": "klemen.janez.policar@gmail.com"
+        }
+    ]
+}

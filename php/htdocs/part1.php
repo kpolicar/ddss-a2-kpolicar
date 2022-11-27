@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/vendor/autoload.php'; session_start(); ?>
 <!DOCTYPE html>
 <!--
 
@@ -43,9 +44,9 @@
             <br>
             <br>
 
-
             <form action="/part1_vulnerable.php">
-                <table  border="1" cellpadding="1" style="width: 300px; background-color:#f1f1f1">
+                <?php $records = $_SESSION['records'] ?? null; ?>
+                <table  border="1" cellpadding="1" style="width: 300px; background-color:#f1f1f1; <?php if($records === []): ?>border-color: red;<?php endif; ?>">
                     <thead>
                         <tr>
                             <th colspan="2"><b>Part 1.0 - Vulnerable Form</b></th>
@@ -54,11 +55,11 @@
                     <tbody>
                         <tr>
                             <td><label>Username</label></td>
-                            <td><input type="text" placeholder="Enter Username" name="v_username" required></td>
+                            <td><input type="text" placeholder="Enter Username" name="v_username" value="<?= $_GET['username'] ?? '' ?>"></td>
                         </tr>
                         <tr>
                             <td><label>Password</label> </td>
-                            <td><input type="password" placeholder="Enter Password" name="v_password" required> </td>
+                            <td><input type="password" placeholder="Enter Password" name="v_password" value="<?= $_GET['password'] ?? '' ?>"> </td>
                         </tr>
                         <tr>
                             <td><label>Remember me</label></td>
@@ -67,6 +68,11 @@
                         <tr>
                             <td align="right" colspan="2"><button type="submit">Login</button></td>
                         </tr>
+                        <?php if($records === []): ?>
+                        <tr>
+                            <td align="right" colspan="2" style="color: red; font-size: 12px;">No records were found matching the criteria!</td>
+                        </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </form> 
@@ -75,7 +81,7 @@
             <br>
 
             <form action="/part1_correct.php">
-                <table  style="width: 300px ; background-color:#f19191" border="1" cellpadding="1">
+                <table style="width: 300px ; background-color:#f19191" border="1" cellpadding="1">
                     <thead>
                         <tr>
                             <th colspan="2"><b>Part 1.1 - Correct Form</b></th>
@@ -84,11 +90,11 @@
                     <tbody>
                         <tr>
                             <td><label>Username</label></td>
-                            <td><input type="text" placeholder="Enter Username" name="c_username" required></td>
+                            <td><input type="text" placeholder="Enter Username" name="c_username" value="<?= $_GET['username'] ?? '' ?>"></td>
                         </tr>
                         <tr>
                             <td><label>Password</label> </td>
-                            <td><input type="password" placeholder="Enter Password" name="c_password" required> </td>
+                            <td><input type="password" placeholder="Enter Password" name="c_password"> </td>
                         </tr>
                         <tr>
                             <td><label>Remember me</label></td>
@@ -104,3 +110,7 @@
         </div>
     </body>
 </html>
+
+<?php
+unset($_SESSION['records']);
+?>

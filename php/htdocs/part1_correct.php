@@ -10,9 +10,8 @@
 		$remember = $_GET['v_remember'];
 	}
 
-    
 
-    print("v_password  -> " . $password . "<br/>");
+	print("v_password  -> " . $password . "<br/>");
     print("v_username  -> " . $username . "<br/>");
     print("v_remember  -> " . $remember . "<br/>");
 
