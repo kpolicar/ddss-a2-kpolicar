@@ -1,6 +1,14 @@
 <?php require_once __DIR__ . '/vendor/autoload.php';
 session_start();
-if (!($_SESSION['auth'] ?? false)) {
+$user = null;
+if ($username = $_SESSION['auth'] ?? null) {
+    $db = pg_connect("host=db dbname=ddss-database-assignment-2 user=ddss-database-assignment-2 password=ddss-database-assignment-2");
+    $users = pg_query($db, "SELECT * FROM users WHERE username='$username'");
+    $users = pg_fetch_all($users);
+    $user = $users[0] ?? null;
+}
+
+if (!$user) {
     header("Location: /?message=auth");
     exit();
 }
@@ -57,14 +65,12 @@ if (!($_SESSION['auth'] ?? false)) {
                         <tr>
                             <th>
                                 <b>Part 2.0 - Vulnerable Form</b>
-
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><textarea style="width: 100%; height: 100px" placeholder="Enter Text" name="v_text" required>
-                                </textarea>
+                            <td><textarea style="width: 100%; height: 100px" placeholder="Enter Text" name="v_text" required></textarea>
                             </td>
                         </tr>
                         <tr>
@@ -87,7 +93,7 @@ if (!($_SESSION['auth'] ?? false)) {
                     </thead>
                     <tbody>
                         <tr>
-                            <td><textarea style="width: 100%; height: 100px" placeholder="Enter Text" name="c_text" required> </textarea>
+                            <td><textarea style="width: 100%; height: 100px" placeholder="Enter Text" name="c_text" required></textarea>
                             </td>
                         </tr>
                         <tr>
@@ -100,6 +106,11 @@ if (!($_SESSION['auth'] ?? false)) {
             <br>
             <br>
 
+            <?php
+            $messages = pg_query($db, "SELECT * FROM messages");
+            $messages = pg_fetch_all($messages);
+            ?>
+
             <table  style="width: 500px" border="1" cellpadding="1" >
                 <thead>
                     <tr>
@@ -107,30 +118,13 @@ if (!($_SESSION['auth'] ?? false)) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <em>You should print the text here. Some examples below. 
-                                These examples should be replaced by the information you obtain from the database.</em>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Vulnerable: Hi! I wrote this message using Vulnerable Form.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Correct: OMG! This form is so correct!!!
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Vulnerable: Oh really?
-                            <script>
-                                //window.alert('Is it?');
-                            </script>
-                        </td>
-                    </tr>
+                    <?php foreach ($messages as $message): ?>
+                        <tr>
+                            <td>
+                                <?= $message['author'] ?>: <?= $message['message'] ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
