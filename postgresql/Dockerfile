@@ -2,7 +2,7 @@
 # Authors: Nuno Antunes <nmsa@dei.uc.pt>, João Antunes <jcfa@dei.uc.pt>
 #
 
-FROM library/postgres
+FROM library/postgres:14.6
 
 
 ENV POSTGRES_USER ddss-database-assignment-2
