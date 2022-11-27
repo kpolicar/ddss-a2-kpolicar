@@ -95,7 +95,7 @@
                     <tbody>
                         <tr>
                             <td><label>Username</label></td>
-                            <td><input type="text" placeholder="Enter Username" name="c_username" value="<?= e($_GET['username']) ?? '' ?>"></td>
+                            <td><input type="text" placeholder="Enter Username" name="c_username" value="<?= e($_GET['username'] ?? '') ?>"></td>
                         </tr>
                         <tr>
                             <td><label>Password</label> </td>
