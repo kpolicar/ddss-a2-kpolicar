@@ -60,7 +60,8 @@ if (!$user) {
 
 
             <form action="/part2_vulnerable.php">
-                <table  style="width: 500px ; background-color:#f1f1f1" border="1" cellpadding="1" >
+                <?php $errors = $_SESSION['v_errors'] ?? null; ?>
+                <table  style="width: 500px ; background-color:#f1f1f1; <?php if(!empty($errors)): ?>border-color: red;<?php endif; ?>" border="1" cellpadding="1" >
                     <thead>
                         <tr>
                             <th>
@@ -73,6 +74,11 @@ if (!$user) {
                             <td><textarea style="width: 100%; height: 100px" placeholder="Enter Text" name="v_text" required></textarea>
                             </td>
                         </tr>
+                        <?php if($errors['message'] ?? false): ?>
+                            <tr>
+                                <td align="right" style="color: red; font-size: 12px;"><?= $errors['message'] ?></td>
+                            </tr>
+                        <?php endif; ?>
                         <tr>
                             <td align="right"><button type="submit">Submit</button></td>
                         </tr>
@@ -130,3 +136,8 @@ if (!$user) {
         </div>
     </body>
 </html>
+
+<?php
+unset($_SESSION['c_errors']);
+unset($_SESSION['v_errors']);
+?>
