@@ -1,3 +1,10 @@
+<?php require_once __DIR__ . '/vendor/autoload.php';
+session_start();
+if (!($_SESSION['auth'] ?? false)) {
+    header("Location: /?message=auth");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <!--
 
@@ -120,7 +127,7 @@
                         <td>
                             Vulnerable: Oh really?
                             <script>
-                                window.alert('Is it?');
+                                //window.alert('Is it?');
                             </script>
                         </td>
                     </tr>

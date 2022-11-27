@@ -22,6 +22,7 @@
 	});
 
 	if ($success) {
+		$_SESSION['auth'] = $username;
 		header("Location: /?message=Success");
 	} else {
 		$_SESSION['c_errors']['credentials'] = 'Could not find a user matching the credentials!';

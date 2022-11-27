@@ -28,6 +28,7 @@
 
 	$_SESSION['v_records'] = $arr;
 	if ($success) {
+		$_SESSION['auth'] = $username;
 		header("Location: /?message=Success");
 	} else {
 		$_SESSION['v_errors']['password'] = 'Invalid password!';
