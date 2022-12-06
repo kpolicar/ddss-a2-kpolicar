@@ -14,7 +14,7 @@
 
 	$db = pg_connect("host=db dbname=ddss-database-assignment-2 user=ddss-database-assignment-2 password=ddss-database-assignment-2");
 
-	$users = pg_query($db, "SELECT * FROM users WHERE username='$username'");
+	$users = pg_query_params($db, "SELECT * FROM users WHERE username=$1", [$username]);
 	$arr = pg_fetch_all($users);
 
 	$success = !empty($arr) && collect($arr)->contains(function ($user) use ($password) {
