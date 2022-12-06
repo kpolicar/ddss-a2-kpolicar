@@ -1,3 +1,7 @@
+<?php require_once __DIR__ . '/vendor/autoload.php';
+session_start();
+$db = pg_connect("host=db dbname=ddss-database-assignment-2 user=ddss-database-assignment-2 password=ddss-database-assignment-2");
+?>
 <!DOCTYPE html>
 <!--
 
@@ -48,7 +52,7 @@
 
                 <tr><td>
 
-                        <form action="/part3_vulnerable.php">
+                        <form action="/part3_vulnerable.php" method="POST">
 
 
                             <table border="1" cellpadding="1" style="font-size: 10pt; width: 400px; background-color:#f1f1f1">
@@ -63,24 +67,30 @@
 
                                     <tr>
                                         <td valign="middle">Title</td>
-                                        <td style="border-width: 1pt"><input type="text"  name="v_name" maxlength="200"  value="" size="20"></td>
+                                        <td style="border-width: 1pt"><input type="text"  name="v_name" maxlength="200"  value="<?= $_GET['v_name'] ?? '' ?>" size="20"></td>
                                     </tr>
                                     <tr>
                                         <td valign="middle">Author</td>
-                                        <td style="border-width: 1pt"><input type="text"  name="v_author" maxlength="100"  value="" size="20"></td>
+                                        <td style="border-width: 1pt"><input type="text"  name="v_author" maxlength="100"  value="<?= $_GET['v_author'] ?? '' ?>" size="20"></td>
                                     </tr>
 
                                     <tr>
                                         <td valign="middle">Category</td>
-                                        <td style="border-width: 1pt"><select name="v_category_id"><option value="">All</option><option value="2" >Databases</option><option value="3" >HTML &amp; Web design</option><option value="1" >Programming</option></select></td>
+                                        <td style="border-width: 1pt">
+                                            <select name="v_category_id">
+                                                <option value="">All</option>
+                                                <option value="2" <?= ($_GET['v_category_id'] ?? '') == '2' ? 'selected' : '' ?>>Databases</option>
+                                                <option value="3" <?= ($_GET['v_category_id'] ?? '') == '3' ? 'selected' : '' ?>>HTML &amp; Web design</option>
+                                                <option value="1" <?= ($_GET['v_category_id'] ?? '') == '1' ? 'selected' : '' ?>><Pr></Pr>ogramming</option>
+                                            </select></td>
                                     </tr>
                                     <tr>
                                         <td valign="middle">Price more then</td>
-                                        <td style="border-width: 1pt"><input type="text"  name="v_pricemin" maxlength="100" value="" size="10"></td>
+                                        <td style="border-width: 1pt"><input type="text"  name="v_pricemin" maxlength="100" value="<?= $_GET['v_pricemin'] ?? '' ?>" size="10"></td>
                                     </tr>
                                     <tr>
                                         <td valign="middle">Price less then</td>
-                                        <td style="border-width: 1pt"><input type="text"  name="v_pricemax" maxlength="100" value="" size="10"></td>
+                                        <td style="border-width: 1pt"><input type="text"  name="v_pricemax" maxlength="100" value="<?= $_GET['v_pricemax'] ?? '' ?>" size="10"></td>
                                     </tr>
 
 
@@ -92,19 +102,19 @@
                                             Search For:<br>
                                         </td>
                                         <td >
-                                            <input size=35 name="v_search_input">
+                                            <input size=35 name="v_search_input" value="<?= $_GET['v_search_input'] ?? '' ?>">
                                         </td>
                                     </tr>
                                     <tr><td valign="middle">
                                             Within: 
                                         </td>
                                         <td><select name="v_search_field" size=1>
-                                                <option value="any" selected>Anywhere</option>
-                                                <option value="title">Title</option>
-                                                <option value="authors">Authors</option>
-                                                <option value="desc">Description</option>
-                                                <option value="keys">Keywords</option>
-                                                <option value="notes">Notes</option>
+                                                <option value="any" <?= ($_GET['v_search_field'] ?? '') == 'any' ? 'selected' : '' ?>>Anywhere</option>
+                                                <option value="title" <?= ($_GET['v_search_field'] ?? '') == 'title' ? 'selected' : '' ?>>Title</option>
+                                                <option value="authors" <?= ($_GET['v_search_field'] ?? '') == 'authors' ? 'selected' : '' ?>>Authors</option>
+                                                <option value="desc" <?= ($_GET['v_search_field'] ?? '') == 'desc' ? 'selected' : '' ?>>Description</option>
+                                                <option value="keys" <?= ($_GET['v_search_field'] ?? '') == 'keys' ? 'selected' : '' ?>>Keywords</option>
+                                                <option value="notes" <?= ($_GET['v_search_field'] ?? '') == 'notes' ? 'selected' : '' ?>>Notes</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -114,9 +124,9 @@
                                             Match: 
                                         </td>
                                         <td>
-                                            <input type=radio name="v_radio_match" value="any" checked="checked">Any word <br>
-                                            <input type=radio name="v_radio_match" value="all" >All words <br>
-                                            <input type=radio name="v_radio_match" value="phrase">Exact phrase<br>
+                                            <input type=radio name="v_radio_match" value="any" <?= ($_GET['v_radio_match'] ?? 'any') == 'any' ? 'checked="checked"' : '' ?>>Any word <br>
+                                            <input type=radio name="v_radio_match" value="all" <?= ($_GET['v_radio_match'] ?? null) == 'all' ? 'checked="checked"' : '' ?>>All words <br>
+                                            <input type=radio name="v_radio_match" value="phrase" <?= ($_GET['v_radio_match'] ?? null) == 'phrase' ? 'checked="checked"' : '' ?>>Exact phrase<br>
                                         </td>
                                     </tr>
                                     <!-- Date range criteria -->
@@ -581,6 +591,68 @@
                     </td>
                 </tr>
             </table>
+
+            <?php
+            $messages = pg_query($db, $_SESSION['sql_books'] ?? "SELECT * FROM books");
+            $messages = pg_fetch_all($messages);
+            ?>
+
+            <table  style="width: 1500px; margin: 15px 0" border="1" cellpadding="1" >
+                <thead>
+                <tr>
+                    <th colspan="9"><b>Output Box</b></th>
+                </tr>
+                <tr>
+                    <th><b>Title</b></th>
+                    <th><b>Authors</b></th>
+                    <th><b>Category</b></th>
+                    <th><b>Price</b></th>
+                    <th><b>Book Date</b></th>
+                    <th><b>Description</b></th>
+                    <th><b>Keywords</b></th>
+                    <th><b>Notes</b></th>
+                    <th><b>Recommendation</b></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($messages as $message): ?>
+                    <tr data-book-id="<?= $message['book_id'] ?>">
+                        <td>
+                            <?= $message['title'] ?>
+                        </td>
+                        <td>
+                            <?= $message['authors'] ?>
+                        </td>
+                        <td>
+                            <?= $message['category'] ?>
+                        </td>
+                        <td>
+                            <?= $message['price'] ?>
+                        </td>
+                        <td>
+                            <?= $message['book_date'] ?>
+                        </td>
+                        <td>
+                            <?= $message['description'] ?>
+                        </td>
+                        </td>
+                        <td>
+                            <?= $message['keywords'] ?>
+                        </td>
+                        <td>
+                            <?= $message['notes'] ?>
+                        </td>
+                        <td>
+                            <?= $message['recomendation'] ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </body>
 </html>
+
+<?php
+unset($_SESSION['sql_books']);
+?>

@@ -2,7 +2,9 @@
 session_start();
 require_once __DIR__ . '/vendor/autoload.php';
 
+$queryParams = [];
 if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $queryParams = $_POST;
     $v_name = $_POST['v_name'];
     $v_author = $_POST['v_author'];
     $v_category_id = $_POST['v_category_id'];
@@ -23,6 +25,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $v_sp_m = $_POST['v_sp_m'];
     $v_sp_s = $_POST['v_sp_s'];
 } else{
+    $queryParams = $_GET;
     $v_name = $_GET['v_name'];
     $v_author = $_GET['v_author'];
     $v_category_id = $_GET['v_category_id'];
@@ -83,7 +86,11 @@ if ($v_search_input) {
     }
 }
 
-$books = pg_query($db, $sql);
-$arr = pg_fetch_all($books);
+// if no conditions have been added, remove the 'where' clause
+if (str_ends_with($sql, ' WHERE ')) {
+    $sql = str_replace(' WHERE ', '', $sql);
+}
 
-dd($sql, $arr);
+$_SESSION['sql_books'] = $sql;
+
+header("Location: /part3.php?".http_build_query($queryParams));
