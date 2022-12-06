@@ -54,9 +54,7 @@ function buildMatchesAllWordsPattern($words) {
     return '^'.implode('', array_map(fn($word) => "(?=.*\m$word\M)", $words)).'.*$';
 }
 function buildConditionalQueryFragmentForAnyColumnMatchesPattern($fields, $pattern) {
-    return implode(' OR ', array_map(function ($field) use ($pattern) {
-        return "$field ~* '$pattern'";
-    }, $fields));
+    return implode(' OR ', array_map(fn($field) => "$field ~* '$pattern'", $fields));
 }
 
 
