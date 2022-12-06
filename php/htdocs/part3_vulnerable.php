@@ -66,10 +66,13 @@ $sql="SELECT * FROM books WHERE ";
 
 $conditions=[];
 
-if ($v_name) $conditions[] = "title = $v_name";
-if ($v_author) $conditions[] = "author = $v_author";
+if ($v_name) $conditions[] = "title = '$v_name'";
+if ($v_author) $conditions[] = "author = '$v_author'";
 if ($v_pricemin) $conditions[] = "price >= $v_pricemin";
 if ($v_pricemax) $conditions[] = "price <= $v_pricemax";
+if ($v_category_id) $conditions[] = "category = '$v_category_id'";
+
+
 if ($v_search_input) {
     $fields = $v_search_field == 'any'
         ? ['title', 'authors']
@@ -77,18 +80,27 @@ if ($v_search_input) {
 
     if ($v_radio_match == 'any') {
         $words = preg_split('/\s+/', $v_search_input);
-        $sql .= '('.buildConditionalQueryFragmentForAnyColumnMatchesPattern($fields, buildMatchesAnyWordPattern($words)).')';
+        $conditions[] = '('.buildConditionalQueryFragmentForAnyColumnMatchesPattern($fields, buildMatchesAnyWordPattern($words)).')';
     } else if ($v_radio_match == 'all') {
         $words = preg_split('/\s+/', $v_search_input);
-        $sql .= '('.buildConditionalQueryFragmentForAnyColumnMatchesPattern($fields, buildMatchesAllWordsPattern($words)).')';
+        $conditions[] = '('.buildConditionalQueryFragmentForAnyColumnMatchesPattern($fields, buildMatchesAllWordsPattern($words)).')';
     } else if ($v_radio_match === 'phrase') {
-        $sql .= '('.buildConditionalQueryFragmentForAnyColumnMatchesPattern($fields, "\m$v_search_input\M").')';
+        $conditions[] = '('.buildConditionalQueryFragmentForAnyColumnMatchesPattern($fields, "\m$v_search_input\M").')';
     }
 }
+
+$sql .= implode(' AND ', $conditions);
 
 // if no conditions have been added, remove the 'where' clause
 if (str_ends_with($sql, ' WHERE ')) {
     $sql = str_replace(' WHERE ', '', $sql);
+}
+
+if ($v_sp_s) {
+    $sql .= " ORDER BY $v_sp_s DESC";
+}
+if ($v_sp_c) {
+    $sql .= " LIMIT $v_sp_c";
 }
 
 $_SESSION['sql_books'] = $sql;

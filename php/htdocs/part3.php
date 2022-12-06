@@ -79,9 +79,9 @@ $db = pg_connect("host=db dbname=ddss-database-assignment-2 user=ddss-database-a
                                         <td style="border-width: 1pt">
                                             <select name="v_category_id">
                                                 <option value="">All</option>
-                                                <option value="2" <?= ($_GET['v_category_id'] ?? '') == '2' ? 'selected' : '' ?>>Databases</option>
-                                                <option value="3" <?= ($_GET['v_category_id'] ?? '') == '3' ? 'selected' : '' ?>>HTML &amp; Web design</option>
-                                                <option value="1" <?= ($_GET['v_category_id'] ?? '') == '1' ? 'selected' : '' ?>><Pr></Pr>ogramming</option>
+                                                <option value="Databases" <?= ($_GET['v_category_id'] ?? '') == 'Databases' ? 'selected' : '' ?>>Databases</option>
+                                                <option value="HTML & Web design" <?= ($_GET['v_category_id'] ?? '') == 'HTML & Web design' ? 'selected' : '' ?>>HTML &amp; Web design</option>
+                                                <option value="Programming" <?= ($_GET['v_category_id'] ?? '') == 'Programming' ? 'selected' : '' ?>>Programming</option>
                                             </select></td>
                                     </tr>
                                     <tr>
@@ -275,17 +275,17 @@ $db = pg_connect("host=db dbname=ddss-database-assignment-2 user=ddss-database-a
                                             Show: 
                                         </td>
                                         <td>
-                                            <select name="v_sp_c" size=1>
-                                                <option value=5>5</option>
-                                                <option value=10 selected>10</option>
-                                                <option value=25>25</option>
-                                                <option value=50>50</option>
-                                                <option value=100>100</option>
+                                            <select name="v_sp_c">
+                                                <option value=5 <?= ($_GET['v_sp_c'] ?? '') == 5 ? 'selected' : '' ?>>5</option>
+                                                <option value=10 <?= ($_GET['v_sp_c'] ?? '') == 10 ? 'selected' : '' ?>>10</option>
+                                                <option value=25 <?= ($_GET['v_sp_c'] ?? '') == 25 ? 'selected' : '' ?>>25</option>
+                                                <option value=50 <?= ($_GET['v_sp_c'] ?? '') == 50 ? 'selected' : '' ?>>50</option>
+                                                <option value=100 <?= ($_GET['v_sp_c'] ?? '') == 100 ? 'selected' : '' ?>>100</option>
                                             </select> results 
                                             <!-- Show or hide summaries in search results -->
                                             <select name="v_sp_m" size=1>
-                                                <option value=1 selected>with</option>
-                                                <option value=0>without</option>
+                                                <option value=1 <?= ($_GET['v_sp_m'] ?? '') == 1 ? 'selected' : '' ?>>with</option>
+                                                <option value=0 <?= ($_GET['v_sp_m'] ?? '') == 0 ? 'selected' : '' ?>>without</option>
                                             </select> summaries<br>
                                         </td>
                                     </tr>
@@ -296,8 +296,8 @@ $db = pg_connect("host=db dbname=ddss-database-assignment-2 user=ddss-database-a
                                         </td>
                                         <td >
                                             <select name="v_sp_s" size=1>
-                                                <option value=0 selected>relevance</option>
-                                                <option value=1>date</option>
+                                                <option value="recomendation" <?= ($_GET['v_sp_s'] ?? '') == 'recomendation' ? 'selected' : '' ?>>relevance</option>
+                                                <option value="book_date" <?= ($_GET['v_sp_s'] ?? '') == 'book_date' ? 'selected' : '' ?>>date</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -608,7 +608,7 @@ $db = pg_connect("host=db dbname=ddss-database-assignment-2 user=ddss-database-a
                     <th><b>Category</b></th>
                     <th><b>Price</b></th>
                     <th><b>Book Date</b></th>
-                    <th><b>Description</b></th>
+                    <th <?= (($_GET['v_sp_m'] ?? 1) == 0) ? 'style="display: none"' : '' ?>><b>Description</b></th>
                     <th><b>Keywords</b></th>
                     <th><b>Notes</b></th>
                     <th><b>Recommendation</b></th>
@@ -632,7 +632,7 @@ $db = pg_connect("host=db dbname=ddss-database-assignment-2 user=ddss-database-a
                         <td>
                             <?= $message['book_date'] ?>
                         </td>
-                        <td>
+                        <td <?= (($_GET['v_sp_m'] ?? 1) == 0) ? 'style="display: none"' : '' ?>>
                             <?= $message['description'] ?>
                         </td>
                         </td>
