@@ -73,7 +73,7 @@ if ($v_category_id) $conditions[] = "category = '$v_category_id'";
 
 if ($v_search_input) {
     $fields = $v_search_field == 'any'
-        ? ['title', 'authors']
+        ? ['title', 'authors', 'category', 'description', 'keywords', 'notes']
         : [$v_search_field];
 
     if ($v_radio_match == 'any') {
