@@ -79,7 +79,7 @@ if ($v_search_input) {
         $words = preg_split('/\s+/', $v_search_input);
         $sql .= '('.buildConditionalQueryFragmentForAnyColumnMatchesPattern($fields, buildMatchesAllWordsPattern($words)).')';
     } else if ($v_radio_match === 'phrase') {
-
+        $sql .= '('.buildConditionalQueryFragmentForAnyColumnMatchesPattern($fields, "\m$v_search_input\M").')';
     }
 }
 
