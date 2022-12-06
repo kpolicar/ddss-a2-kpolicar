@@ -60,6 +60,7 @@ if (!$user) {
 
 
             <form action="/part2_vulnerable.php">
+                <input type="hidden" value="<?= $_SESSION['auth'] ?>">
                 <?php $errors = $_SESSION['v_errors'] ?? null; ?>
                 <table  style="width: 500px ; background-color:#f1f1f1; <?php if(!empty($errors)): ?>border-color: red;<?php endif; ?>" border="1" cellpadding="1" >
                     <thead>
