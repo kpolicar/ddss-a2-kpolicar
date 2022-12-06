@@ -53,7 +53,7 @@ function buildMatchesAnyWordPattern($words) {
 function buildMatchesAllWordsPattern($words) {
     return '^'.implode('', array_map(fn($word) => "(?=.*\m$word\M)", $words)).'.*$';
 }
-function buildConditionalQueryFragmentForAnyColumnMatchesPattern($fields, $pattern) {
+function buildConditionQueryFragmentForAnyColumnMatchesPattern($fields, $pattern) {
     return implode(' OR ', array_map(fn($field) => "$field ~* '$pattern'", $fields));
 }
 
@@ -78,12 +78,12 @@ if ($v_search_input) {
 
     if ($v_radio_match == 'any') {
         $words = preg_split('/\s+/', $v_search_input);
-        $conditions[] = '('.buildConditionalQueryFragmentForAnyColumnMatchesPattern($fields, buildMatchesAnyWordPattern($words)).')';
+        $conditions[] = '('.buildConditionQueryFragmentForAnyColumnMatchesPattern($fields, buildMatchesAnyWordPattern($words)).')';
     } else if ($v_radio_match == 'all') {
         $words = preg_split('/\s+/', $v_search_input);
-        $conditions[] = '('.buildConditionalQueryFragmentForAnyColumnMatchesPattern($fields, buildMatchesAllWordsPattern($words)).')';
+        $conditions[] = '('.buildConditionQueryFragmentForAnyColumnMatchesPattern($fields, buildMatchesAllWordsPattern($words)).')';
     } else if ($v_radio_match === 'phrase') {
-        $conditions[] = '('.buildConditionalQueryFragmentForAnyColumnMatchesPattern($fields, "\m$v_search_input\M").')';
+        $conditions[] = '('.buildConditionQueryFragmentForAnyColumnMatchesPattern($fields, "\m$v_search_input\M").')';
     }
 }
 
