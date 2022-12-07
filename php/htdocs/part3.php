@@ -135,133 +135,133 @@ $db = pg_connect("host=db dbname=ddss-database-assignment-2 user=ddss-database-a
                                     </tr>
                                     <tr>
                                         <td align=right>
-                                            <input type=radio name="v_sp_d" value="custom" checked>
+                                            <input type=radio name="v_sp_d" value="custom" <?= ($_GET['v_sp_d'] ?? null) == 'custom' ? 'checked="checked"' : '' ?>>
                                         </td>
                                         <td>
                                             <select name="v_sp_date_range" size=1>
-                                                <option value=-1 selected>Anytime</option>
-                                                <option value=7>Within the last week</option>
-                                                <option value=14>Within the last 2 weeks</option>
-                                                <option value=30>Within the last 30 days</option>
-                                                <option value=60>Within the last 60 days</option>
-                                                <option value=90>Within the last 90 days</option>
-                                                <option value=180>Within the last 180 days</option>
-                                                <option value=365>Within the last year</option>
-                                                <option value=730>Within the last two years</option>
+                                                <option value=-1 <?= ($_GET['v_sp_date_range'] ?? -1) == -1 ? 'selected' : '' ?>>Anytime</option>
+                                                <option value=7 <?= ($_GET['v_sp_date_range'] ?? -1) == 7 ? 'selected' : '' ?>>Within the last week</option>
+                                                <option value=14 <?= ($_GET['v_sp_date_range'] ?? -1) == 14 ? 'selected' : '' ?>>Within the last 2 weeks</option>
+                                                <option value=30 <?= ($_GET['v_sp_date_range'] ?? -1) == 30 ? 'selected' : '' ?>>Within the last 30 days</option>
+                                                <option value=60 <?= ($_GET['v_sp_date_range'] ?? -1) == 60 ? 'selected' : '' ?>>Within the last 60 days</option>
+                                                <option value=90 <?= ($_GET['v_sp_date_range'] ?? -1) == 90 ? 'selected' : '' ?>>Within the last 90 days</option>
+                                                <option value=180 <?= ($_GET['v_sp_date_range'] ?? -1) == 180 ? 'selected' : '' ?>>Within the last 180 days</option>
+                                                <option value=365 <?= ($_GET['v_sp_date_range'] ?? -1) == 365 ? 'selected' : '' ?>>Within the last year</option>
+                                                <option value=730 <?= ($_GET['v_sp_date_range'] ?? -1) == 730 ? 'selected' : '' ?>>Within the last two years</option>
                                             </select>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td rowspan=2 align=right>
-                                            <input type=radio name="v_sp_d" value=specific>
+                                            <input type=radio name="v_sp_d" value="specific" <?= ($_GET['v_sp_d'] ?? null) == 'specific' ? 'checked="checked"' : '' ?>>
                                         </td>
                                         <td>From:
                                             <select name="v_sp_start_month" size=1>
-                                                <option value=0 selected></option>
-                                                <option value=1>January</option>
-                                                <option value=2>February</option>
-                                                <option value=3>March</option>
-                                                <option value=4>April</option>
-                                                <option value=5>May</option>
-                                                <option value=6>June</option>
-                                                <option value=7>July</option>
-                                                <option value=8>August</option>
-                                                <option value=9>September</option>
-                                                <option value=10>October</option>
-                                                <option value=11>November</option>
-                                                <option value=12>December</option>
+                                                <option value=0 <?= ($_GET['v_sp_start_month'] ?? 0) == 0 ? 'selected' : '' ?>></option>
+                                                <option value=1 <?= ($_GET['v_sp_start_month'] ?? 0) == 1 ? 'selected' : '' ?>>January</option>
+                                                <option value=2 <?= ($_GET['v_sp_start_month'] ?? 0) == 2 ? 'selected' : '' ?>>February</option>
+                                                <option value=3 <?= ($_GET['v_sp_start_month'] ?? 0) == 3 ? 'selected' : '' ?>>March</option>
+                                                <option value=4 <?= ($_GET['v_sp_start_month'] ?? 0) == 4 ? 'selected' : '' ?>>April</option>
+                                                <option value=5 <?= ($_GET['v_sp_start_month'] ?? 0) == 5 ? 'selected' : '' ?>>May</option>
+                                                <option value=6 <?= ($_GET['v_sp_start_month'] ?? 0) == 6 ? 'selected' : '' ?>>June</option>
+                                                <option value=7 <?= ($_GET['v_sp_start_month'] ?? 0) == 7 ? 'selected' : '' ?>>July</option>
+                                                <option value= <?= ($_GET['v_sp_start_month'] ?? 0) == 8 ? 'selected' : '' ?>>August</option>
+                                                <option value=9 <?= ($_GET['v_sp_start_month'] ?? 0) == 9 ? 'selected' : '' ?>>September</option>
+                                                <option value=10 <?= ($_GET['v_sp_start_month'] ?? 0) == 10 ? 'selected' : '' ?>>October</option>
+                                                <option value=11 <?= ($_GET['v_sp_start_month'] ?? 0) == 11 ? 'selected' : '' ?>>November</option>
+                                                <option value=12 <?= ($_GET['v_sp_start_month'] ?? 0) == 12 ? 'selected' : '' ?>>December</option>
                                             </select>
                                             <select name="v_sp_start_day" size=1>
-                                                <option value=0 selected></option>
-                                                <option value=1>1</option>
-                                                <option value=2>2</option>
-                                                <option value=3>3</option>
-                                                <option value=4>4</option>
-                                                <option value=5>5</option>
-                                                <option value=6>6</option>
-                                                <option value=7>7</option>
-                                                <option value=8>8</option>
-                                                <option value=9>9</option>
-                                                <option value=10>10</option>
-                                                <option value=11>11</option>
-                                                <option value=12>12</option>
-                                                <option value=13>13</option>
-                                                <option value=14>14</option>
-                                                <option value=15>15</option>
-                                                <option value=16>16</option>
-                                                <option value=17>17</option>
-                                                <option value=18>18</option>
-                                                <option value=19>19</option>
-                                                <option value=20>20</option>
-                                                <option value=21>21</option>
-                                                <option value=22>22</option>
-                                                <option value=23>23</option>
-                                                <option value=24>24</option>
-                                                <option value=25>25</option>
-                                                <option value=26>26</option>
-                                                <option value=27>27</option>
-                                                <option value=28>28</option>
-                                                <option value=29>29</option>
-                                                <option value=30>30</option>
-                                                <option value=31>31</option>
+                                                <option value=0 <?= ($_GET['v_sp_start_day'] ?? 0) == 0 ? 'selected' : '' ?>></option>
+                                                <option value=1 <?= ($_GET['v_sp_start_day'] ?? 0) == 1 ? 'selected' : '' ?>>1</option>
+                                                <option value=2 <?= ($_GET['v_sp_start_day'] ?? 0) == 2 ? 'selected' : '' ?>>2</option>
+                                                <option value=3 <?= ($_GET['v_sp_start_day'] ?? 0) == 3 ? 'selected' : '' ?>>3</option>
+                                                <option value=4 <?= ($_GET['v_sp_start_day'] ?? 0) == 4 ? 'selected' : '' ?>>4</option>
+                                                <option value=5 <?= ($_GET['v_sp_start_day'] ?? 0) == 5 ? 'selected' : '' ?>>5</option>
+                                                <option value=6 <?= ($_GET['v_sp_start_day'] ?? 0) == 6 ? 'selected' : '' ?>>6</option>
+                                                <option value=7 <?= ($_GET['v_sp_start_day'] ?? 0) == 7 ? 'selected' : '' ?>>7</option>
+                                                <option value=8 <?= ($_GET['v_sp_start_day'] ?? 0) == 8 ? 'selected' : '' ?>>8</option>
+                                                <option value=9 <?= ($_GET['v_sp_start_day'] ?? 0) == 9 ? 'selected' : '' ?>>9</option>
+                                                <option value=10 <?= ($_GET['v_sp_start_day'] ?? 0) == 10 ? 'selected' : '' ?>>10</option>
+                                                <option value=11 <?= ($_GET['v_sp_start_day'] ?? 0) == 11 ? 'selected' : '' ?>>11</option>
+                                                <option value=12 <?= ($_GET['v_sp_start_day'] ?? 0) == 12 ? 'selected' : '' ?>>12</option>
+                                                <option value=13 <?= ($_GET['v_sp_start_day'] ?? 0) == 13 ? 'selected' : '' ?>>13</option>
+                                                <option value=14 <?= ($_GET['v_sp_start_day'] ?? 0) == 14 ? 'selected' : '' ?>>14</option>
+                                                <option value=15 <?= ($_GET['v_sp_start_day'] ?? 0) == 15 ? 'selected' : '' ?>>15</option>
+                                                <option value=16 <?= ($_GET['v_sp_start_day'] ?? 0) == 16 ? 'selected' : '' ?>>16</option>
+                                                <option value=17 <?= ($_GET['v_sp_start_day'] ?? 0) == 17 ? 'selected' : '' ?>>17</option>
+                                                <option value=18 <?= ($_GET['v_sp_start_day'] ?? 0) == 18 ? 'selected' : '' ?>>18</option>
+                                                <option value=19 <?= ($_GET['v_sp_start_day'] ?? 0) == 19 ? 'selected' : '' ?>>19</option>
+                                                <option value=20 <?= ($_GET['v_sp_start_day'] ?? 0) == 20 ? 'selected' : '' ?>>20</option>
+                                                <option value=21 <?= ($_GET['v_sp_start_day'] ?? 0) == 21 ? 'selected' : '' ?>>21</option>
+                                                <option value=22 <?= ($_GET['v_sp_start_day'] ?? 0) == 22 ? 'selected' : '' ?>>22</option>
+                                                <option value=23 <?= ($_GET['v_sp_start_day'] ?? 0) == 23 ? 'selected' : '' ?>>23</option>
+                                                <option value=24 <?= ($_GET['v_sp_start_day'] ?? 0) == 24 ? 'selected' : '' ?>>24</option>
+                                                <option value=25 <?= ($_GET['v_sp_start_day'] ?? 0) == 25 ? 'selected' : '' ?>>25</option>
+                                                <option value=26 <?= ($_GET['v_sp_start_day'] ?? 0) == 26 ? 'selected' : '' ?>>26</option>
+                                                <option value=27 <?= ($_GET['v_sp_start_day'] ?? 0) == 27 ? 'selected' : '' ?>>27</option>
+                                                <option value=28 <?= ($_GET['v_sp_start_day'] ?? 0) == 28 ? 'selected' : '' ?>>28</option>
+                                                <option value=29 <?= ($_GET['v_sp_start_day'] ?? 0) == 29 ? 'selected' : '' ?>>29</option>
+                                                <option value=30 <?= ($_GET['v_sp_start_day'] ?? 0) == 30 ? 'selected' : '' ?>>30</option>
+                                                <option value=31 <?= ($_GET['v_sp_start_day'] ?? 0) == 31 ? 'selected' : '' ?>>31</option>
                                             </select>
                                             <!--comma-->,
-                                            <input size=4 name="v_sp_start_year">
+                                            <input size=4 name="v_sp_start_year" value="<?= ($_GET['v_sp_start_year'] ?? '')?>">
                                         </td></tr>
                                     <tr>
                                         <td>To:
 
                                             <select name="v_sp_end_month" size=1>
-                                                <option value=0 selected></option>
-                                                <option value=1>January</option>
-                                                <option value=2>February</option>
-                                                <option value=3>March</option>
-                                                <option value=4>April</option>
-                                                <option value=5>May</option>
-                                                <option value=6>June</option>
-                                                <option value=7>July</option>
-                                                <option value=8>August</option>
-                                                <option value=9>September</option>
-                                                <option value=10>October</option>
-                                                <option value=11>November</option>
-                                                <option value=12>December</option>
+                                                <option value=0 <?= ($_GET['v_sp_end_month'] ?? 0) == 0 ? 'selected' : '' ?>></option>
+                                                <option value=1 <?= ($_GET['v_sp_end_month'] ?? 0) == 1 ? 'selected' : '' ?>>January</option>
+                                                <option value=2 <?= ($_GET['v_sp_end_month'] ?? 0) == 2 ? 'selected' : '' ?>>February</option>
+                                                <option value=3 <?= ($_GET['v_sp_end_month'] ?? 0) == 3 ? 'selected' : '' ?>>March</option>
+                                                <option value=4 <?= ($_GET['v_sp_end_month'] ?? 0) == 4 ? 'selected' : '' ?>>April</option>
+                                                <option value=5 <?= ($_GET['v_sp_end_month'] ?? 0) == 5 ? 'selected' : '' ?>>May</option>
+                                                <option value=6 <?= ($_GET['v_sp_end_month'] ?? 0) == 6 ? 'selected' : '' ?>>June</option>
+                                                <option value=7 <?= ($_GET['v_sp_end_month'] ?? 0) == 7 ? 'selected' : '' ?>>July</option>
+                                                <option value=8 <?= ($_GET['v_sp_end_month'] ?? 0) == 8 ? 'selected' : '' ?>>August</option>
+                                                <option value=9 <?= ($_GET['v_sp_end_month'] ?? 0) == 9 ? 'selected' : '' ?>>September</option>
+                                                <option value=10 <?= ($_GET['v_sp_end_month'] ?? 0) == 10 ? 'selected' : '' ?>>October</option>
+                                                <option value=11 <?= ($_GET['v_sp_end_month'] ?? 0) == 11 ? 'selected' : '' ?>>November</option>
+                                                <option value=12 <?= ($_GET['v_sp_end_month'] ?? 0) == 12 ? 'selected' : '' ?>>December</option>
                                             </select>
                                             <select name="v_sp_end_day" size=1>
-                                                <option value=0 selected></option>
-                                                <option value=1>1</option>
-                                                <option value=2>2</option>
-                                                <option value=3>3</option>
-                                                <option value=4>4</option>
-                                                <option value=5>5</option>
-                                                <option value=6>6</option>
-                                                <option value=7>7</option>
-                                                <option value=8>8</option>
-                                                <option value=9>9</option>
-                                                <option value=10>10</option>
-                                                <option value=11>11</option>
-                                                <option value=12>12</option>
-                                                <option value=13>13</option>
-                                                <option value=14>14</option>
-                                                <option value=15>15</option>
-                                                <option value=16>16</option>
-                                                <option value=17>17</option>
-                                                <option value=18>18</option>
-                                                <option value=19>19</option>
-                                                <option value=20>20</option>
-                                                <option value=21>21</option>
-                                                <option value=22>22</option>
-                                                <option value=23>23</option>
-                                                <option value=24>24</option>
-                                                <option value=25>25</option>
-                                                <option value=26>26</option>
-                                                <option value=27>27</option>
-                                                <option value=28>28</option>
-                                                <option value=29>29</option>
-                                                <option value=30>30</option>
-                                                <option value=31>31</option>
+                                                <option value=0 <?= ($_GET['v_sp_end_day'] ?? 0) == 0 ? 'selected' : '' ?> selected></option>
+                                                <option value=1 <?= ($_GET['v_sp_end_day'] ?? 0) == 1 ? 'selected' : '' ?>>1</option>
+                                                <option value=2 <?= ($_GET['v_sp_end_day'] ?? 0) == 2 ? 'selected' : '' ?>>2</option>
+                                                <option value=3 <?= ($_GET['v_sp_end_day'] ?? 0) == 3 ? 'selected' : '' ?>>3</option>
+                                                <option value=4 <?= ($_GET['v_sp_end_day'] ?? 0) == 4 ? 'selected' : '' ?>>4</option>
+                                                <option value=5 <?= ($_GET['v_sp_end_day'] ?? 0) == 5 ? 'selected' : '' ?>>5</option>
+                                                <option value=6 <?= ($_GET['v_sp_end_day'] ?? 0) == 6 ? 'selected' : '' ?>>6</option>
+                                                <option value=7 <?= ($_GET['v_sp_end_day'] ?? 0) == 7 ? 'selected' : '' ?>>7</option>
+                                                <option value=8 <?= ($_GET['v_sp_end_day'] ?? 0) == 8 ? 'selected' : '' ?>>8</option>
+                                                <option value=9 <?= ($_GET['v_sp_end_day'] ?? 0) == 9 ? 'selected' : '' ?>>9</option>
+                                                <option value=10 <?= ($_GET['v_sp_end_day'] ?? 0) == 10 ? 'selected' : '' ?>>10</option>
+                                                <option value=11 <?= ($_GET['v_sp_end_day'] ?? 0) == 11 ? 'selected' : '' ?>>11</option>
+                                                <option value=12 <?= ($_GET['v_sp_end_day'] ?? 0) == 12 ? 'selected' : '' ?>>12</option>
+                                                <option value=13 <?= ($_GET['v_sp_end_day'] ?? 0) == 13 ? 'selected' : '' ?>>13</option>
+                                                <option value=14 <?= ($_GET['v_sp_end_day'] ?? 0) == 14 ? 'selected' : '' ?>>14</option>
+                                                <option value=15 <?= ($_GET['v_sp_end_day'] ?? 0) == 15 ? 'selected' : '' ?>>15</option>
+                                                <option value=16 <?= ($_GET['v_sp_end_day'] ?? 0) == 16 ? 'selected' : '' ?>>16</option>
+                                                <option value=17 <?= ($_GET['v_sp_end_day'] ?? 0) == 17 ? 'selected' : '' ?>>17</option>
+                                                <option value=18 <?= ($_GET['v_sp_end_day'] ?? 0) == 18 ? 'selected' : '' ?>>18</option>
+                                                <option value=19 <?= ($_GET['v_sp_end_day'] ?? 0) == 19 ? 'selected' : '' ?>>19</option>
+                                                <option value=20 <?= ($_GET['v_sp_end_day'] ?? 0) == 20 ? 'selected' : '' ?>>20</option>
+                                                <option value=21 <?= ($_GET['v_sp_end_day'] ?? 0) == 21 ? 'selected' : '' ?>>21</option>
+                                                <option value=22 <?= ($_GET['v_sp_end_day'] ?? 0) == 22 ? 'selected' : '' ?>>22</option>
+                                                <option value=23 <?= ($_GET['v_sp_end_day'] ?? 0) == 23 ? 'selected' : '' ?>>23</option>
+                                                <option value=24 <?= ($_GET['v_sp_end_day'] ?? 0) == 24 ? 'selected' : '' ?>>24</option>
+                                                <option value=25 <?= ($_GET['v_sp_end_day'] ?? 0) == 25 ? 'selected' : '' ?>>25</option>
+                                                <option value=26 <?= ($_GET['v_sp_end_day'] ?? 0) == 26 ? 'selected' : '' ?>>26</option>
+                                                <option value=27 <?= ($_GET['v_sp_end_day'] ?? 0) == 27 ? 'selected' : '' ?>>27</option>
+                                                <option value=28 <?= ($_GET['v_sp_end_day'] ?? 0) == 28 ? 'selected' : '' ?>>28</option>
+                                                <option value=29 <?= ($_GET['v_sp_end_day'] ?? 0) == 29 ? 'selected' : '' ?>>29</option>
+                                                <option value=30 <?= ($_GET['v_sp_end_day'] ?? 0) == 30 ? 'selected' : '' ?>>30</option>
+                                                <option value=31 <?= ($_GET['v_sp_end_day'] ?? 0) == 31 ? 'selected' : '' ?>>31</option>
                                             </select>
                                             <!--comma-->,
-                                            <input size=4 name="v_sp_end_year">
+                                            <input size=4 name="v_sp_end_year" value="<?= ($_GET['v_sp_end_year'] ?? '')?>" />
                                         </td></tr>
 
 

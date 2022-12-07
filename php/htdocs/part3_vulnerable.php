@@ -69,6 +69,19 @@ if ($v_author) $conditions[] = "author = '$v_author'";
 if ($v_pricemin) $conditions[] = "price >= $v_pricemin";
 if ($v_pricemax) $conditions[] = "price <= $v_pricemax";
 if ($v_category_id) $conditions[] = "category = '$v_category_id'";
+if ($v_sp_d == 'custom') {
+    $days = $v_sp_date_range;
+    if ($days != -1) {
+        $conditions[] = "book_date >= current_date - interval '$days days'";
+    }
+} else if ($v_sp_d == 'specific') {
+    if ($v_sp_start_month && $v_sp_start_day && $v_sp_start_year) {
+        $conditions[] = "book_date >= '$v_sp_start_year-$v_sp_start_month-$v_sp_start_day'";
+    }
+    if ($v_sp_end_month && $v_sp_end_day && $v_sp_end_year) {
+        $conditions[] = "book_date <= '$v_sp_end_year-$v_sp_end_month-$v_sp_end_day'";
+    }
+}
 
 
 if ($v_search_input) {
