@@ -65,7 +65,7 @@ $sql="SELECT * FROM books WHERE ";
 $conditions=[];
 
 if ($v_name) $conditions[] = "title = '$v_name'";
-if ($v_author) $conditions[] = "author = '$v_author'";
+if ($v_author) $conditions[] = "authors = '$v_author'";
 if ($v_pricemin) $conditions[] = "price >= $v_pricemin";
 if ($v_pricemax) $conditions[] = "price <= $v_pricemax";
 if ($v_category_id) $conditions[] = "category = '$v_category_id'";
