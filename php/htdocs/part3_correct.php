@@ -47,14 +47,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $c_sp_s = $_GET['c_sp_s'];
 }
 
-function buildMatchesAnyWordPattern($words) {
-    return implode('|', array_map(fn($word) => "(\m$word\M)", $words));
+function buildMatchesAnyWordPattern($db, $words) {
+    return implode('|', array_map(fn($word) => "(\m".preg_quote($word)."\M)", $words));
 }
-function buildMatchesAllWordsPattern($words) {
-    return '^'.implode('', array_map(fn($word) => "(?=.*\m$word\M)", $words)).'.*$';
+function buildMatchesAllWordsPattern($db, $words) {
+    return '^'.implode('', array_map(fn($word) => "(?=.*\m".preg_quote($word)."\M)", $words)).'.*$';
 }
-function buildConditionQueryFragmentForAnyColumnMatchesPattern($fields, $pattern) {
-    return implode(' OR ', array_map(fn($field) => "$field ~* '$pattern'", $fields));
+function buildConditionQueryFragmentForAnyColumnMatchesPattern($db, $fields, $pattern) {
+    return implode(' OR ', array_map(fn($field) => "$field ~* ".pg_escape_literal($db, $pattern), $fields));
 }
 
 
@@ -64,22 +64,22 @@ $sql="SELECT * FROM books WHERE ";
 
 $conditions=[];
 
-if ($c_name) $conditions[] = "title = '$c_name'";
-if ($c_author) $conditions[] = "authors = '$c_author'";
-if ($c_pricemin) $conditions[] = "price >= $c_pricemin";
-if ($c_pricemax) $conditions[] = "price <= $c_pricemax";
-if ($c_category_id) $conditions[] = "category = '$c_category_id'";
+if ($c_name) $conditions[] = "title = ".pg_escape_literal($db, $c_name);
+if ($c_author) $conditions[] = "authors = ".pg_escape_literal($db, $c_author);
+if ($c_pricemin) $conditions[] = "price >= ".pg_escape_literal($db, $c_pricemin);
+if ($c_pricemax) $conditions[] = "price <= ".pg_escape_literal($db, $c_pricemax);
+if ($c_category_id) $conditions[] = "category = ".pg_escape_literal($db, $c_category_id);
 if ($c_sp_d == 'custom') {
     $days = $c_sp_date_range;
     if ($days != -1) {
-        $conditions[] = "book_date >= current_date - interval '$days days'";
+        $conditions[] = "book_date >= current_date - interval ".pg_escape_literal($db, $days.' days');
     }
 } else if ($c_sp_d == 'specific') {
     if ($c_sp_start_month && $c_sp_start_day && $c_sp_start_year) {
-        $conditions[] = "book_date >= '$c_sp_start_year-$c_sp_start_month-$c_sp_start_day'";
+        $conditions[] = "book_date >= ".pg_escape_literal($db, "$c_sp_start_year-$c_sp_start_month-$c_sp_start_day");
     }
     if ($c_sp_end_month && $c_sp_end_day && $c_sp_end_year) {
-        $conditions[] = "book_date <= '$c_sp_end_year-$c_sp_end_month-$c_sp_end_day'";
+        $conditions[] = "book_date <= ".pg_escape_literal($db, "$c_sp_start_year-$c_sp_start_month-$c_sp_start_day");
     }
 }
 
@@ -91,12 +91,12 @@ if ($c_search_input) {
 
     if ($c_radio_match == 'any') {
         $words = preg_split('/\s+/', $c_search_input);
-        $conditions[] = '('.buildConditionQueryFragmentForAnyColumnMatchesPattern($fields, buildMatchesAnyWordPattern($words)).')';
+        $conditions[] = '('.buildConditionQueryFragmentForAnyColumnMatchesPattern($db, $fields, buildMatchesAnyWordPattern($db, $words)).')';
     } else if ($c_radio_match == 'all') {
         $words = preg_split('/\s+/', $c_search_input);
-        $conditions[] = '('.buildConditionQueryFragmentForAnyColumnMatchesPattern($fields, buildMatchesAllWordsPattern($words)).')';
+        $conditions[] = '('.buildConditionQueryFragmentForAnyColumnMatchesPattern($db, $fields, buildMatchesAllWordsPattern($db, $words)).')';
     } else if ($c_radio_match === 'phrase') {
-        $conditions[] = '('.buildConditionQueryFragmentForAnyColumnMatchesPattern($fields, "\m$c_search_input\M").')';
+        $conditions[] = '('.buildConditionQueryFragmentForAnyColumnMatchesPattern($db, $fields, "\m".preg_quote($c_search_input)."\M").')';
     }
 }
 
@@ -108,10 +108,10 @@ if (str_ends_with($sql, ' WHERE ')) {
 }
 
 if ($c_sp_s) {
-    $sql .= " ORDER BY $c_sp_s DESC";
+    $sql .= " ORDER BY ".pg_escape_string($db, $c_sp_s)." DESC";
 }
 if ($c_sp_c) {
-    $sql .= " LIMIT $c_sp_c";
+    $sql .= " LIMIT ".pg_escape_literal($db, $c_sp_c);
 }
 
 $_SESSION['sql_books'] = $sql;
