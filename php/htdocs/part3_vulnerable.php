@@ -24,6 +24,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $v_sp_c = $_POST['v_sp_c'];
     $v_sp_m = $_POST['v_sp_m'];
     $v_sp_s = $_POST['v_sp_s'];
+    $v_dbcredentials = $_POST['v_dbcredentials'];
 } else{
     $queryParams = $_GET;
     $v_name = $_GET['v_name'];
@@ -45,6 +46,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $v_sp_c = $_GET['v_sp_c'];
     $v_sp_m = $_GET['v_sp_m'];
     $v_sp_s = $_GET['v_sp_s'];
+    $v_dbcredentials = $_GET['v_dbcredentials'];
 }
 
 function buildMatchesAnyWordPattern($words) {
@@ -58,7 +60,7 @@ function buildConditionQueryFragmentForAnyColumnMatchesPattern($fields, $pattern
 }
 
 
-$db = pg_connect("host=db dbname=ddss-database-assignment-2 user=ddss-database-assignment-2 password=ddss-database-assignment-2");
+$db = pg_connect($v_dbcredentials);
 
 $sql="SELECT * FROM books WHERE ";
 

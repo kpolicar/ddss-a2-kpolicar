@@ -53,6 +53,7 @@ $db = pg_connect("host=db dbname=ddss-database-assignment-2 user=ddss-database-a
                 <tr><td>
 
                         <form action="/part3_vulnerable.php" method="POST">
+                            <input type="hidden" name="v_dbcredentials" value="host=db dbname=ddss-database-assignment-2 user=ddss-database-assignment-2 password=ddss-database-assignment-2">
 
 
                             <table border="1" cellpadding="1" style="font-size: 10pt; width: 400px; background-color:#f1f1f1">

@@ -19,7 +19,7 @@
 
 	$success = false;
 	if (empty($arr)) {
-		$_SESSION['errors']['username'] = "A user with username \"$username\" does not exist!";
+		$_SESSION['v_errors']['username'] = "A user with username \"$username\" does not exist!";
 	} else {
 		$success = collect($arr)->contains(function ($user) use ($password) {
 			return (new \Illuminate\Hashing\BcryptHasher)->check($password, $user['password']);
