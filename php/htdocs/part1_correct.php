@@ -1,4 +1,6 @@
 <?php
+try {
+	error_reporting(0);
 	session_start();
 	require_once __DIR__ . '/vendor/autoload.php';
 
@@ -18,8 +20,8 @@
 	$arr = pg_fetch_all($users);
 
 	$success = !empty($arr) && collect($arr)->contains(function ($user) use ($password) {
-		return (new \Illuminate\Hashing\BcryptHasher)->check($password, $user['password']);
-	});
+			return (new \Illuminate\Hashing\BcryptHasher)->check($password, $user['password']);
+		});
 
 	if ($success) {
 		$_SESSION['auth'] = $username;
@@ -28,5 +30,8 @@
 		$_SESSION['c_errors']['credentials'] = 'Could not find a user matching the credentials!';
 		header("Location: /part1.php?username=$username&password=$password");
 	}
+} catch (Exception $e) {
+	exit(500);
+}
 ?>
 

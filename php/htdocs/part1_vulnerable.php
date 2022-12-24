@@ -17,6 +17,7 @@
 	$users = pg_query($db, "SELECT * FROM users WHERE username='$username'");
 	$arr = pg_fetch_all($users);
 
+	$password = md5("yo");
 	$success = false;
 	if (empty($arr)) {
 		$_SESSION['v_errors']['username'] = "A user with username \"$username\" does not exist!";

@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/vendor/autoload.php';
-$username = $_POST['auth'] ?? '?';
+$username = $_POST['auth'] ?? $_GET['auth'] ?? '?';
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $text = $_POST['v_text'];
